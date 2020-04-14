@@ -5,7 +5,6 @@ import com.NerdSpace.Rain.Graphics.Sprite;
 
 public class Tile {
 
-    public int x, y;
     public Sprite sprite;
 
     public static Tile grass = new GrassTile(Sprite.grass);

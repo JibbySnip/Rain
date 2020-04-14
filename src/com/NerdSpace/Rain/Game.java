@@ -23,7 +23,6 @@ public class Game extends Canvas implements Runnable {
     private Screen screen;
     private Level level;
 
-    private String title = "Rain";
     private Keyboard keyboard = new Keyboard();
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -115,6 +114,7 @@ public class Game extends Canvas implements Runnable {
             render();
             if (System.currentTimeMillis() - titleTimer >= 1000) {
                 titleTimer += 1000;
+                String title = "Rain";
                 frame.setTitle(title + " | "+ ticks + " tps, "+ frames + " fps");
                 ticks = 0;
                 frames = 0;
