@@ -24,19 +24,17 @@ public class Sprite {
 
     public Sprite(int size, int color) {
         SIZE = size;
-        pixels = new int[SIZE*SIZE];
+        pixels = new int[SIZE * SIZE];
         Arrays.fill(pixels, color);
 
     }
 
     private void load() {
-        for (int my = 0; my < SIZE; my++) {
-            for (int mx = 0; mx < SIZE; mx++) {
-                pixels[mx + my * SIZE] = sheet.pixels[(x + mx) + (y + my) * sheet.SIZE];
+        for (int y = 0; y < SIZE; y++) {
+            for (int x = 0; x < SIZE; x++) {
+                pixels[x + y * SIZE] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.SIZE];
             }
         }
     }
 
-    private void unload() {
-    }
 }
