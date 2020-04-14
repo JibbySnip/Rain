@@ -36,4 +36,7 @@ public class Sprite {
             }
         }
     }
+
+    private void unload() {
+    }
 }

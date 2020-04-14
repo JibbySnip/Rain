@@ -1,7 +1,9 @@
 package com.NerdSpace.Rain;
 
-import com.NerdSpace.Rain.Input.Keyboard;
 import com.NerdSpace.Rain.Graphics.Screen;
+import com.NerdSpace.Rain.Input.Keyboard;
+import com.NerdSpace.Rain.Level.Level;
+import com.NerdSpace.Rain.Level.RandomLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +21,7 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private JFrame frame;
     private Screen screen;
+    private Level level;
 
     private String title = "Rain";
     private Keyboard keyboard = new Keyboard();
@@ -31,6 +34,7 @@ public class Game extends Canvas implements Runnable {
         screen = new Screen(width, height);
         frame = new JFrame();
         addKeyListener(keyboard);
+        level = new RandomLevel(64, 64);
     }
 
     public static void main(String[] args) {
@@ -77,11 +81,11 @@ public class Game extends Canvas implements Runnable {
         }
 
         screen.clear();
-        screen.render(x,y);
 
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = screen.pixels[i];
-        }
+        level.render(x, y, screen);
+
+
+        System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
 
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
