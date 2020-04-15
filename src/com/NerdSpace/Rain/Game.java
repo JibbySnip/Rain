@@ -1,5 +1,6 @@
 package com.NerdSpace.Rain;
 
+import com.NerdSpace.Rain.Entity.Mob.Player;
 import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Input.Keyboard;
 import com.NerdSpace.Rain.Level.Level;
@@ -22,6 +23,7 @@ public class Game extends Canvas implements Runnable {
     private JFrame frame;
     private Screen screen;
     private Level level;
+    private Player player;
 
     private Keyboard keyboard = new Keyboard();
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -34,6 +36,7 @@ public class Game extends Canvas implements Runnable {
         frame = new JFrame();
         addKeyListener(keyboard);
         level = new RandomLevel(64, 64);
+        player = new Player(keyboard);
     }
 
     public static void main(String[] args) {
@@ -66,10 +69,7 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         keyboard.update();
-        if (keyboard.up) y--;
-        if (keyboard.down) y++;
-        if (keyboard.left) x--;
-        if (keyboard.right) x++;
+        player.update();
     }
 
     private void render() {
@@ -80,9 +80,11 @@ public class Game extends Canvas implements Runnable {
         }
 
         screen.clear();
+        int xScroll = player.x - screen.width / 2;
+        int yScroll = player.y - screen.height / 2;
 
-        level.render(x, y, screen);
-
+        level.render(xScroll, yScroll, screen);
+        player.render(screen);
 
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
 

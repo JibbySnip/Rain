@@ -9,7 +9,16 @@ public abstract class Mob extends Entity {
     protected int dir = 0;
     protected boolean moving = false;
 
-    public void move() {
+    public void move(int vx, int vy) {
+        if (vy < 0) dir = 0;
+        else if (vx > 0) dir = 1;
+        else if (vy > 0) dir = 2;
+        else if (vx < 0) dir = 3;
+
+        if (!collision()) {
+            x += vx;
+            y += vy;
+        }
 
     }
 
