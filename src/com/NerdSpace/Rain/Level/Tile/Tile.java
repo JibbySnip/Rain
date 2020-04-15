@@ -9,6 +9,8 @@ public class Tile {
 
     public static Tile grass = new GrassTile(Sprite.grass);
     public static Tile voidTile = new VoidTile(Sprite.voidSprite);
+    public static Tile flower = new FlowerTile(Sprite.flower);
+    public static Tile rock = new RockTile(Sprite.rock);
 
     public Tile(Sprite sprite) {
         this.sprite = sprite;
