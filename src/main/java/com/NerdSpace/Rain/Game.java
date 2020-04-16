@@ -51,7 +51,7 @@ public class Game extends Canvas implements Runnable {
     public static void main(String[] args) {
         Game game = new Game();
 
-        game.frame.setResizable(true);
+        game.frame.setResizable(false);
         game.frame.add(game);
         game.frame.pack();
         game.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -115,6 +115,14 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.dispose();
         bs.show();
+    }
+
+    public static int getWindowWidth() {
+        return width * scale;
+    }
+
+    public static int getWindowHeight() {
+        return height * scale;
     }
 
     @Override

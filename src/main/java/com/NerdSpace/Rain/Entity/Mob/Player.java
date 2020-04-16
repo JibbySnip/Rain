@@ -1,8 +1,10 @@
 package com.NerdSpace.Rain.Entity.Mob;
 
+import com.NerdSpace.Rain.Game;
 import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Graphics.Sprite;
 import com.NerdSpace.Rain.Input.Keyboard;
+import com.NerdSpace.Rain.Input.Mouse;
 import com.NerdSpace.Rain.Level.TileCoordinate;
 
 public class Player extends Mob {
@@ -20,6 +22,43 @@ public class Player extends Mob {
     }
 
     public void render(Screen screen) {
+        doWalkAnimation();
+
+        if (!moving || walkCount > 7500) walkCount = 0;
+        else walkCount++;
+
+        screen.renderPlayer(x - 16, y - 16, sprite);
+
+
+    }
+
+    public void update() {
+        int vx = 0, vy = 0;
+        if (key.up) vy--;
+        if (key.down) vy++;
+        if (key.left) vx--;
+        if (key.right) vx++;
+        if (vx != 0 || vy != 0) {
+            moving = true;
+            move(vx, vy);
+        } else moving = false;
+
+        updateShooting();
+    }
+
+    private void updateShooting() {
+        if (Mouse.getButton() == 1) {
+            double dx = Mouse.getX() - Game.getWindowWidth() / 2.0;
+            double dy = Mouse.getY() - Game.getWindowHeight() / 2.0;
+            double dir = Math.atan2(dy, dx);
+
+            shoot(dx, dy, dir);
+
+        }
+
+    }
+
+    private void doWalkAnimation() {
         if (dir == 0) {
             if (moving) {
                 if (walkCount % 60 < 15) {
@@ -69,26 +108,5 @@ public class Player extends Mob {
                 }
             } else sprite = Sprite.playerL;
         }
-        ;
-
-        if (!moving || walkCount > 7500) walkCount = 0;
-        else walkCount++;
-
-        screen.renderPlayer(x - 16, y - 16, sprite);
-
-
-    }
-
-    public void update() {
-        int vx = 0, vy = 0;
-        if (key.up) vy--;
-        if (key.down) vy++;
-        if (key.left) vx--;
-        if (key.right) vx++;
-        if (vx != 0 || vy != 0) {
-            moving = true;
-            move(vx, vy);
-        } else moving = false;
-
     }
 }

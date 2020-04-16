@@ -5,17 +5,17 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class Mouse implements MouseListener, MouseMotionListener {
-    private int x=-1,y=-1,b=-1;
+    private static int x = -1, y = -1, b = -1;
 
-    public int getX() {
+    public static int getX() {
         return x;
     }
 
-    public int getY() {
+    public static int getY() {
         return y;
     }
 
-    public int getButton() {
+    public static int getButton() {
         return b;
     }
 
@@ -46,7 +46,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        mouseMoved(e);
     }
 
     @Override

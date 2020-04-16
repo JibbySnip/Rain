@@ -32,11 +32,15 @@ public abstract class Mob extends Entity {
 
     }
 
+    protected void shoot(double x, double y, double dir) {
+
+    }
+
     public boolean collision(int xa, int ya) {
         boolean solid = false;
         for (int c = 0; c < 4; c++) {
-            int xt = ((x + xa) + c % 2 *9 - 5) >> 4;
-            int yt = ((y+ya) + c / 2 * 5 + 7)  >> 4;
+            int xt = ((x + xa) + c % 2 * 9 - 5) >> 4;
+            int yt = ((y + ya) + c / 2 * 5 + 7) >> 4;
 
             if (level.getTile(xt, yt).solid()) solid = true;
         }
