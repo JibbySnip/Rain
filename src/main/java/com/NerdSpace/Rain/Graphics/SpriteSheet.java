@@ -5,12 +5,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class SpriteSheet {
-    private String path;
+    private final String path;
     public int[] pixels;
     public final int SIZE;
 
     public static SpriteSheet tiles = new SpriteSheet("/textures/tiles.png",256);
-    public static SpriteSheet spawn = new SpriteSheet("/textures/spawn_textures.png",48);
+    public static SpriteSheet spawn = new SpriteSheet("/textures/spawn_textures.png", 48);
+    public static SpriteSheet projectilesTrainer = new SpriteSheet("/textures/projectiles/trainer_projectiles.png", 48);
 
     public SpriteSheet(String path, int size) {
         this.path = path;

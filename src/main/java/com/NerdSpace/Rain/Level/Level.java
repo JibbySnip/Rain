@@ -1,7 +1,13 @@
 package com.NerdSpace.Rain.Level;
 
+import com.NerdSpace.Rain.Entity.Entity;
+import com.NerdSpace.Rain.Entity.Particle.Particle;
+import com.NerdSpace.Rain.Entity.Projectile.Projectile;
 import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Level.Tile.Tile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Level {
 
@@ -9,6 +15,9 @@ public class Level {
     protected int[] tilesInt;
 
     public static Level spawnLevel = new SpawnLevel("/levels/spawn_level.png");
+    private final List<Entity> entities = new ArrayList<>();
+    private final List<Projectile> projectiles = new ArrayList<>();
+    private List<Particle> particles = new ArrayList<>();
 
     public Level(int width, int height) {
         this.width = width;
@@ -32,7 +41,14 @@ public class Level {
     }
 
     public void update() {
-
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).update();
+            if (entities.get(i).isRemoved()) entities.remove(i);
+        }
+        for (int i = 0; i < projectiles.size(); i++) {
+            projectiles.get(i).update();
+            if (projectiles.get(i).isRemoved()) projectiles.remove(i);
+        }
     }
 
     private void time() {
@@ -52,7 +68,25 @@ public class Level {
 
             }
         }
+
+        for (Entity entity : entities) {
+            entity.render(screen);
+        }
+        for (Projectile p : projectiles) {
+            p.render(screen);
+        }
     }
+
+    public void add(Entity e) {
+        e.init(this);
+        if (e instanceof Particle) {
+            particles.add((Particle) e);
+
+        } else if (e instanceof Projectile) {
+            projectiles.add((Projectile) e);
+        } else entities.add(e);
+    }
+
 
     public Tile getTile(int x, int y) {
 //        int grass = 0xff00ff00;
@@ -67,5 +101,17 @@ public class Level {
         if (tilesInt[x + y * width] == Tile.colSpawnWall2) return Tile.spawnWall2;
         if (tilesInt[x + y * width] == Tile.colSpawnWater) return Tile.spawnWater;
         return Tile.voidTile;
+    }
+
+    public boolean tileCollision(double x, double y, double dx, double dy, int size) {
+        boolean solid = false;
+        for (int c = 0; c < 4; c++) {
+//            double xt = ((x + dx) + c % 2 * 6 - 4)/16;
+//            double yt = ((y + dy) + c / 2.0 * 5 + 0)/16;
+            double xt = ((x + dx) + c % 2.0 * size - size / 2.0) / 16;
+            double yt = ((y + dy) + c / 2.0 * size - size / 2.0) / 16;
+            if (getTile((int) xt, (int) yt).solid()) solid = true;
+        }
+        return solid;
     }
 }

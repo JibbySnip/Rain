@@ -1,5 +1,6 @@
 package com.NerdSpace.Rain.Entity.Mob;
 
+import com.NerdSpace.Rain.Entity.Projectile.TrainerProjectile;
 import com.NerdSpace.Rain.Game;
 import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Graphics.Sprite;
@@ -10,6 +11,7 @@ import com.NerdSpace.Rain.Level.TileCoordinate;
 public class Player extends Mob {
     private Keyboard key;
     private int walkCount;
+    private int currShots;
 // Unused constructor
 //    public Player(Keyboard key) {
 //        this.key = key;
@@ -19,6 +21,7 @@ public class Player extends Mob {
         this.x = t.getX();
         this.y = t.getY();
         this.key = key;
+        currShots = TrainerProjectile.RATE_OF_FIRE;
     }
 
     public void render(Screen screen) {
@@ -33,6 +36,8 @@ public class Player extends Mob {
     }
 
     public void update() {
+        if (currShots != 0) currShots--;
+        else currShots = TrainerProjectile.RATE_OF_FIRE;
         int vx = 0, vy = 0;
         if (key.up) vy--;
         if (key.down) vy++;
@@ -41,21 +46,21 @@ public class Player extends Mob {
         if (vx != 0 || vy != 0) {
             moving = true;
             move(vx, vy);
+
         } else moving = false;
 
         updateShooting();
     }
 
     private void updateShooting() {
-        if (Mouse.getButton() == 1) {
+        if (Mouse.getButton() == 1 && currShots == 0) {
             double dx = Mouse.getX() - Game.getWindowWidth() / 2.0;
             double dy = Mouse.getY() - Game.getWindowHeight() / 2.0;
             double dir = Math.atan2(dy, dx);
 
-            shoot(dx, dy, dir);
+            shoot(x, y, dir);
 
         }
-
     }
 
     private void doWalkAnimation() {

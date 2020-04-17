@@ -1,6 +1,8 @@
 package com.NerdSpace.Rain.Entity.Mob;
 
 import com.NerdSpace.Rain.Entity.Entity;
+import com.NerdSpace.Rain.Entity.Projectile.Projectile;
+import com.NerdSpace.Rain.Entity.Projectile.TrainerProjectile;
 import com.NerdSpace.Rain.Graphics.Sprite;
 
 public abstract class Mob extends Entity {
@@ -32,8 +34,9 @@ public abstract class Mob extends Entity {
 
     }
 
-    protected void shoot(double x, double y, double dir) {
-
+    protected void shoot(int x, int y, double dir) {
+        Projectile p = new TrainerProjectile(x, y, dir);
+        level.add(p);
     }
 
     public boolean collision(int xa, int ya) {

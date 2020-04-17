@@ -16,7 +16,10 @@ com/NerdSpace/Rain/Level/Level.class
 com/NerdSpace/Rain/Level/Tile/Tile.class
 com/NerdSpace/Rain/Level/RandomLevel.class
 com/NerdSpace/Rain/Level/Tile/SpawnTiles/SpawnWaterTile.class
+com/NerdSpace/Rain/Entity/Projectile/TrainerProjectile.class
 com/NerdSpace/Rain/Level/Tile/VoidTile.class
 com/NerdSpace/Rain/Entity/Mob/Player.class
+com/NerdSpace/Rain/Entity/Projectile/Projectile.class
+com/NerdSpace/Rain/Input/Mouse.class
 com/NerdSpace/Rain/Graphics/Sprite.class
 com/NerdSpace/Rain/Game.class

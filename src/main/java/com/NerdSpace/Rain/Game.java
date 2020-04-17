@@ -20,11 +20,11 @@ public class Game extends Canvas implements Runnable {
     public static int height = 168;
     public static int scale = 3;
 
-    private int x=0,y=0;
+    private int x = 0, y = 0;
     private boolean running;
     private Thread thread;
-    private JFrame frame;
-    private Screen screen;
+    private final JFrame frame;
+    private final Screen screen;
     private Level level;
     private Player player;
 
@@ -34,7 +34,7 @@ public class Game extends Canvas implements Runnable {
 
 
     public Game() {
-        Dimension size = new Dimension(width*scale,height*scale);
+        Dimension size = new Dimension(width * scale, height * scale);
         setPreferredSize(size);
         screen = new Screen(width, height);
         frame = new JFrame();
@@ -93,6 +93,7 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         keyboard.update();
         player.update();
+        level.update();
     }
 
     private void render() {
@@ -108,6 +109,7 @@ public class Game extends Canvas implements Runnable {
 
         level.render(xScroll, yScroll, screen);
         player.render(screen);
+
 
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
 

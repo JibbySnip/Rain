@@ -1,5 +1,6 @@
 package com.NerdSpace.Rain.Graphics;
 
+import com.NerdSpace.Rain.Entity.Projectile.Projectile;
 import com.NerdSpace.Rain.Level.RandomLevel;
 import com.NerdSpace.Rain.Level.Tile.Tile;
 
@@ -27,33 +28,67 @@ public class Screen {
         }
     }
 
-    public void renderTile(int xp, int yp, Tile tile) {
-        xp -= xOffset;
-        yp -= yOffset;
-        for (int y = 0; y < tile.sprite.SIZE; y++) {
+    public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed, boolean filterColor) {
+        if (fixed) {
+            xp -= xOffset;
+            yp -= yOffset;
+        }
+        for (int y = 0; y < sprite.getHeight(); y++) {
             int ya = y + yp;
-            for (int x = 0; x < tile.sprite.SIZE; x++) {
+            for (int x = 0; x < sprite.getWidth(); x++) {
                 int xa = x + xp;
-                if (xa < -tile.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
-                if (xa < 0) xa = 0;
-                pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
+                if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+                int col = sprite.pixels[x + y * sprite.getWidth()];
+                if (col != 0xFFFF00FF || !filterColor) pixels[xa + ya * width] = col;
             }
         }
     }
 
+    public void renderTile(int xp, int yp, Tile tile) {
+//        xp -= xOffset;
+//        yp -= yOffset;
+//        for (int y = 0; y < tile.sprite.SIZE; y++) {
+//            int ya = y + yp;
+//            for (int x = 0; x < tile.sprite.SIZE; x++) {
+//                int xa = x + xp;
+//                if (xa < -tile.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
+//                if (xa < 0) xa = 0;
+//                pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
+//            }
+//        }
+        renderSprite(xp, yp, tile.sprite, true, false);
+    }
+
+    public void renderProjectile(int xp, int yp, Projectile p) {
+//        xp -= xOffset;
+//        yp -= yOffset;
+//        for (int y = 0; y < p.getSpriteSize(); y++) {
+//            int ya = y + yp;
+//            for (int x = 0; x < p.getSpriteSize(); x++) {
+//                int xa = x + xp;
+//                if (xa < -p.getSpriteSize() || xa >= width || ya < 0 || ya >= height) break;
+//                if (xa < 0) xa = 0;
+//                int col = p.getSprite().pixels[x + y * p.getSpriteSize()];
+//                if (col != 0xFFFF00FF) pixels[xa + ya * width] = p.getSprite().pixels[x + y * p.getSpriteSize()];
+//            }
+//        }
+        renderSprite(xp, yp, p.sprite, true, true);
+    }
+
     public void renderPlayer(int xp, int yp, Sprite sprite) {
-        xp -= xOffset;
-        yp -= yOffset;
-        for (int y = 0; y < sprite.SIZE; y++) {
-            int ya = y + yp;
-            for (int x = 0; x < sprite.SIZE; x++) {
-                int xa = x + xp;
-                if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
-                if (xa < 0) xa = 0;
-                int col = sprite.pixels[x + y * sprite.SIZE];
-                if (col != 0xFFFF00FF) pixels[xa + ya * width] = col;
-            }
-        }
+//        xp -= xOffset;
+//        yp -= yOffset;
+//        for (int y = 0; y < sprite.SIZE; y++) {
+//            int ya = y + yp;
+//            for (int x = 0; x < sprite.SIZE; x++) {
+//                int xa = x + xp;
+//                if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
+//                if (xa < 0) xa = 0;
+//                int col = sprite.pixels[x + y * sprite.SIZE];
+//                if (col != 0xFFFF00FF) pixels[xa + ya * width] = col;
+//            }
+//        }
+        renderSprite(xp, yp, sprite, true, true);
     }
 
 
