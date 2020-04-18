@@ -30,7 +30,6 @@ public class Level {
     public Level(String path) {
         loadLevel(path);
         generateLevel();
-
     }
 
     protected void loadLevel(String path) {
@@ -41,14 +40,22 @@ public class Level {
     }
 
     public void update() {
-        for (int i = 0; i < entities.size(); i++) {
-            entities.get(i).update();
-            if (entities.get(i).isRemoved()) entities.remove(i);
+        for (Entity entity : entities) {
+            entity.update();
         }
-        for (int i = 0; i < projectiles.size(); i++) {
-            projectiles.get(i).update();
-            if (projectiles.get(i).isRemoved()) projectiles.remove(i);
+        for (Projectile projectile : projectiles) {
+            projectile.update();
         }
+        for (Particle particle : particles) {
+            particle.update();
+        }
+        remove();
+    }
+
+    private void remove() {
+        entities.removeIf(Entity::isRemoved);
+        projectiles.removeIf(Entity::isRemoved);
+        particles.removeIf(Entity::isRemoved);
     }
 
     private void time() {
@@ -56,7 +63,7 @@ public class Level {
     }
 
     public void render(int xScroll, int yScroll, Screen screen) {
-        screen.setOffset(xScroll,yScroll);
+        screen.setOffset(xScroll, yScroll);
         int x0 = xScroll >> 4;
         int x1 = (xScroll + screen.width + 16) >> 4;
         int y0 = yScroll >> 4;
@@ -73,6 +80,9 @@ public class Level {
             entity.render(screen);
         }
         for (Projectile p : projectiles) {
+            p.render(screen);
+        }
+        for (Particle p : particles) {
             p.render(screen);
         }
     }
@@ -103,15 +113,14 @@ public class Level {
         return Tile.voidTile;
     }
 
-    public boolean tileCollision(double x, double y, double dx, double dy, int size) {
+    public boolean tileCollision(int x, int y, int size, int xMargin, int yMargin) {
         boolean solid = false;
         for (int c = 0; c < 4; c++) {
-//            double xt = ((x + dx) + c % 2 * 6 - 4)/16;
-//            double yt = ((y + dy) + c / 2.0 * 5 + 0)/16;
-            double xt = ((x + dx) + c % 2.0 * size - size / 2.0) / 16;
-            double yt = ((y + dy) + c / 2.0 * size - size / 2.0) / 16;
-            if (getTile((int) xt, (int) yt).solid()) solid = true;
+            int xt = (x + c % 2 * size + xMargin) >> 4;
+            int yt = (y + c / 2 * size + yMargin) >> 4;
+            if (getTile(xt, yt).solid()) solid = true;
         }
+
         return solid;
     }
 }

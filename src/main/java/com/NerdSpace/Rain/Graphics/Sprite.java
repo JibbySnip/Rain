@@ -23,7 +23,7 @@ public class Sprite {
 
     // particle sprites
 
-    public static Sprite normalParticle = new Sprite(3, 0xfff00fff);
+    public static Sprite normalParticle = new Sprite(3, 0xaaaaaa);
     // player sprites
 
     public static Sprite playerF = new Sprite(32, 0, 4, SpriteSheet.tiles);
@@ -42,6 +42,8 @@ public class Sprite {
     public static Sprite playerR_1 = new Sprite(32, 1, 3, SpriteSheet.tiles);
     public static Sprite playerR_2 = new Sprite(32, 2, 3, SpriteSheet.tiles);
     public static Sprite playerR_3 = new Sprite(32, 3, 3, SpriteSheet.tiles);
+    public static Sprite blue = new Sprite(1, 0xff0000ff);
+    public static Sprite green = new Sprite(1, 0xff00ff00);
 
     public final int SIZE;
     public int[] pixels;

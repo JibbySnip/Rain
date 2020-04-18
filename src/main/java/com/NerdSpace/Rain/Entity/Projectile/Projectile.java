@@ -1,7 +1,6 @@
 package com.NerdSpace.Rain.Entity.Projectile;
 
 import com.NerdSpace.Rain.Entity.Entity;
-import com.NerdSpace.Rain.Entity.Particle.Particle;
 import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Graphics.Sprite;
 
@@ -35,23 +34,26 @@ public abstract class Projectile extends Entity {
     }
 
     private void move() {
-        if (!level.tileCollision(x, y, dx, dy, 10)) {
+        if (!level.tileCollision((int) (x + dx), (int) (y + dy), 9, 3, 3)) {
             x += dx;
             y += dy;
             if (distance() > range) remove();
         } else {
-            Particle p = new Particle((int) x, (int) y, 50, 10);
-            level.add(p);
+            collide();
             remove();
         }
     }
 
     public void render(Screen screen) {
-        screen.renderProjectile((int) x - 8, (int) y - 4, this);
+        screen.renderProjectile((int) x, (int) y, this);
     }
 
     private double distance() {
         return Math.hypot(x - launchX, y - launchY);
+    }
+
+    protected void collide() {
+
     }
 
 

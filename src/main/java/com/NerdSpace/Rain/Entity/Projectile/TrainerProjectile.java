@@ -1,5 +1,6 @@
 package com.NerdSpace.Rain.Entity.Projectile;
 
+import com.NerdSpace.Rain.Entity.Spawner.ParticleSpawner;
 import com.NerdSpace.Rain.Graphics.Sprite;
 
 public class TrainerProjectile extends Projectile {
@@ -14,6 +15,10 @@ public class TrainerProjectile extends Projectile {
 
         dx = speed * Math.cos(angle);
         dy = speed * Math.sin(angle);
+    }
+
+    protected void collide() {
+        level.add(new ParticleSpawner((int) x + sprite.getWidth() / 2, (int) y + sprite.getHeight() / 2, 30, 30, level));
     }
 
 
