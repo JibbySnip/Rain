@@ -49,8 +49,21 @@ public class Sprite {
     public int[] pixels;
     private int x, y;
     private final int width, height;
-    private SpriteSheet sheet;
+    protected SpriteSheet sheet;
 
+    protected Sprite(SpriteSheet sheet, int width, int height) {
+        SIZE = (width == height) ? width : -1;
+        this.width = width;
+        this.height = height;
+        this.sheet = sheet;
+    }
+
+    public Sprite(int[] pixels, int width, int height) {
+        SIZE = width == height ? width : -1;
+        this.width = width;
+        this.height = height;
+        this.pixels = pixels;
+    }
 
     public Sprite(int size, int x, int y, SpriteSheet sheet) {
         SIZE = size;

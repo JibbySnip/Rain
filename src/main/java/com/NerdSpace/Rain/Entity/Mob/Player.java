@@ -2,8 +2,10 @@ package com.NerdSpace.Rain.Entity.Mob;
 
 import com.NerdSpace.Rain.Entity.Projectile.TrainerProjectile;
 import com.NerdSpace.Rain.Game;
+import com.NerdSpace.Rain.Graphics.AnimatedSprite;
 import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Graphics.Sprite;
+import com.NerdSpace.Rain.Graphics.SpriteSheet;
 import com.NerdSpace.Rain.Input.Keyboard;
 import com.NerdSpace.Rain.Input.Mouse;
 import com.NerdSpace.Rain.Level.TileCoordinate;
@@ -12,6 +14,7 @@ public class Player extends Mob {
     private Keyboard key;
     private int walkCount;
     private int currShots;
+    private AnimatedSprite test = new AnimatedSprite(SpriteSheet.playerDown, 32, 32, 3);
 // Unused constructor
 //    public Player(Keyboard key) {
 //        this.key = key;
@@ -26,16 +29,17 @@ public class Player extends Mob {
 
     public void render(Screen screen) {
         doWalkAnimation();
-
         if (!moving || walkCount > 7500) walkCount = 0;
         else walkCount++;
 
-        screen.renderPlayer(x - 16, y - 16, sprite);
+//        screen.renderPlayer(x - 16, y - 16, sprite);
+        screen.renderPlayer(x - 16, y - 16, test.getSprite());
 
 
     }
 
     public void update() {
+        test.update();
         if (currShots != 0) currShots--;
         else currShots = TrainerProjectile.RATE_OF_FIRE;
         int vx = 0, vy = 0;

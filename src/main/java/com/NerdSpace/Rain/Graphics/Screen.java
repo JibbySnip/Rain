@@ -28,6 +28,23 @@ public class Screen {
         }
     }
 
+    // This is for debugging
+    public void renderSheet(int xp, int yp, SpriteSheet sheet, boolean fixed) {
+        if (fixed) {
+            xp -= xOffset;
+            yp -= yOffset;
+        }
+        for (int y = 0; y < sheet.HEIGHT; y++) {
+            int ya = y + yp;
+            for (int x = 0; x < sheet.WIDTH; x++) {
+                int xa = x + xp;
+                if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+                int col = sheet.pixels[x + y * sheet.WIDTH];
+                pixels[xa + ya * width] = col;
+            }
+        }
+    }
+
     public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed, boolean filterColor) {
         if (fixed) {
             xp -= xOffset;
