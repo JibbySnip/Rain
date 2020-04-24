@@ -3,11 +3,11 @@ package com.NerdSpace.Rain.Entity.Mob;
 import com.NerdSpace.Rain.Entity.Entity;
 import com.NerdSpace.Rain.Entity.Projectile.Projectile;
 import com.NerdSpace.Rain.Entity.Projectile.TrainerProjectile;
+import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Graphics.Sprite;
 
 public abstract class Mob extends Entity {
 
-    protected Sprite sprite;
     protected int dir = 0;
     protected boolean moving = false;
 
@@ -23,16 +23,47 @@ public abstract class Mob extends Entity {
         else if (ya > 0) dir = 2;
         else if (xa < 0) dir = 3;
 
-        if (!collision(xa, ya)) {
-            x += xa;
-            y += ya;
+//        for (int xt = 0; xt < Math.abs(xa); xt++) {
+//            if (!collision(signum(xa),0)) x += signum(xa);
+//        }
+//
+//        for (int yt = 0; yt < Math.abs(ya); yt++) {
+//            if (!collision(0, signum(ya))) y += signum(ya);
+//        }
+
+        while (xa != 0) {
+            if (Math.abs(xa) >= 1) {
+                if (!collision(signum(xa), 0)) {
+                    this.x += signum(xa);
+                }
+                xa -= signum(xa);
+            } else {
+                this.x += xa;
+                xa = 0;
+            }
+        }
+        while (ya != 0) {
+            if (Math.abs(ya) >= 1) {
+                if (!collision(0, signum(ya))) {
+                    this.y += signum(ya);
+                }
+                ya -= signum(ya);
+            } else {
+                this.y += ya;
+                ya = 0;
+            }
         }
 
     }
 
-    public void update() {
-
+    private int signum(int x) {
+        if (x < 0) return -1;
+        else return 1;
     }
+
+    public abstract void update();
+
+    public abstract void render(Screen screen);
 
     protected void shoot(int x, int y, double dir) {
         Projectile p = new TrainerProjectile(x, y, dir);
@@ -42,8 +73,8 @@ public abstract class Mob extends Entity {
     public boolean collision(int xa, int ya) {
         boolean solid = false;
         for (int c = 0; c < 4; c++) {
-            int xt = ((x + xa) + c % 2 * 9 - 5) >> 4;
-            int yt = ((y + ya) + c / 2 * 5 + 7) >> 4;
+            int xt = ((int) (x + xa) + c % 2 * 9 - 5) >> 4;
+            int yt = ((int) (y + ya) + c / 2 * 7 + 5) >> 4;
 
             if (level.getTile(xt, yt).solid()) solid = true;
         }
@@ -51,4 +82,7 @@ public abstract class Mob extends Entity {
     }
 
 
+    public Sprite getSprite() {
+        return sprite;
+    }
 }

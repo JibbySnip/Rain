@@ -1,14 +1,16 @@
 package com.NerdSpace.Rain.Entity;
 
 import com.NerdSpace.Rain.Graphics.Screen;
+import com.NerdSpace.Rain.Graphics.Sprite;
 import com.NerdSpace.Rain.Level.Level;
 
 import java.util.Random;
 
 public abstract class Entity {
 
-    public int x, y;
+    public double x, y;
     protected Level level;
+    protected Sprite sprite;
     protected final Random random = new Random();
     private boolean removed = false;
 
@@ -29,5 +31,13 @@ public abstract class Entity {
 
     public boolean isRemoved() {
         return removed;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 }

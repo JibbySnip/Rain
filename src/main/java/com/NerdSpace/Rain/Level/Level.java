@@ -1,6 +1,7 @@
 package com.NerdSpace.Rain.Level;
 
 import com.NerdSpace.Rain.Entity.Entity;
+import com.NerdSpace.Rain.Entity.Mob.Player;
 import com.NerdSpace.Rain.Entity.Particle.Particle;
 import com.NerdSpace.Rain.Entity.Projectile.Projectile;
 import com.NerdSpace.Rain.Graphics.Screen;
@@ -17,7 +18,8 @@ public class Level {
     public static Level spawnLevel = new SpawnLevel("/levels/spawn_level.png");
     private final List<Entity> entities = new ArrayList<>();
     private final List<Projectile> projectiles = new ArrayList<>();
-    private List<Particle> particles = new ArrayList<>();
+    private final List<Particle> particles = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
 
     public Level(int width, int height) {
         this.width = width;
@@ -48,6 +50,9 @@ public class Level {
         }
         for (Particle particle : particles) {
             particle.update();
+        }
+        for (Player player : players) {
+            player.update();
         }
         remove();
     }
@@ -85,15 +90,19 @@ public class Level {
         for (Particle p : particles) {
             p.render(screen);
         }
+        for (Player player : players) {
+            player.render(screen);
+        }
     }
 
     public void add(Entity e) {
         e.init(this);
         if (e instanceof Particle) {
             particles.add((Particle) e);
-
         } else if (e instanceof Projectile) {
             projectiles.add((Projectile) e);
+        } else if (e instanceof Player) {
+            players.add((Player) e);
         } else entities.add(e);
     }
 
@@ -122,5 +131,45 @@ public class Level {
         }
 
         return solid;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Player getPlayerAt(int index) {
+        return players.get(index);
+    }
+
+    public Player getClientPlayer() {
+        return players.size() > 0 ? players.get(0) : null;
+    }
+
+    public List<Entity> getEntitiesInRadius(Entity e, int radius) {
+        List<Entity> results = new ArrayList<>();
+        for (Entity entity : entities) {
+            if (Math.hypot(e.getX() - entity.getX(), e.getY() - entity.getY()) <= radius) results.add(entity);
+        }
+        return results;
+    }
+
+    public List<Player> getPlayersInRadius(Entity e, int radius) {
+        List<Player> results = new ArrayList<>();
+        for (Player p : players) {
+            if (Math.hypot(e.getX() - p.getX(), e.getY() - p.getY()) <= radius) results.add(p);
+        }
+        return results;
+    }
+
+    public Player getNearestPlayer(Entity e, int radius) {
+        Player currPlayer = null;
+        double currDist = 0;
+        for (Player p : getPlayersInRadius(e, radius)) {
+            if (Math.hypot(p.getX() - e.getX(), p.getY() - e.getY()) >= currDist) {
+                currDist = Math.hypot(p.getX() - e.getX(), p.getY() - e.getY());
+                currPlayer = p;
+            }
+        }
+        return currPlayer;
     }
 }

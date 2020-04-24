@@ -10,6 +10,7 @@ public class AnimatedSprite extends Sprite {
 
     public AnimatedSprite(SpriteSheet sheet, int width, int height, int length) {
         super(sheet, width, height);
+        this.sheet = sheet;
         this.length = length;
         sprite = sheet.getSprites()[0];
         if (length > sheet.getSprites().length)
@@ -20,7 +21,7 @@ public class AnimatedSprite extends Sprite {
         if (time % rate == 0) {
             if (frame >= length) frame = 0;
             else frame++;
-            sprite = sheet.getSprites()[frame];
+            setSprite(frame);
         }
         time++;
     }
@@ -29,8 +30,21 @@ public class AnimatedSprite extends Sprite {
         return sprite;
     }
 
+    public Sprite getSprite(int index) {
+        return sheet.getSprites()[index];
+    }
+
     public void setFrameRate(int rate) {
         this.rate = rate;
     }
 
+    public void setFrame(int frame) {
+        if (frame > length - 1) System.err.println("Error: Frame is out of bounds");
+        this.frame = frame;
+        setSprite(frame);
+    }
+
+    private void setSprite(int frame) {
+        sprite = sheet.getSprites()[frame];
+    }
 }

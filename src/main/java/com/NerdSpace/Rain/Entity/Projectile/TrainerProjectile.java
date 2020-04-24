@@ -18,7 +18,7 @@ public class TrainerProjectile extends Projectile {
     }
 
     protected void collide() {
-        level.add(new ParticleSpawner((int) x + sprite.getWidth() / 2, (int) y + sprite.getHeight() / 2, 30, 30, level));
+        level.add(new ParticleSpawner((int) x + sprite.getWidth() / 2, (int) y + sprite.getHeight() / 2, 45, 50, level));
     }
 
 

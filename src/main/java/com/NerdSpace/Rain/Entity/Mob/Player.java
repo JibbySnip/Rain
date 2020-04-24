@@ -4,18 +4,20 @@ import com.NerdSpace.Rain.Entity.Projectile.TrainerProjectile;
 import com.NerdSpace.Rain.Game;
 import com.NerdSpace.Rain.Graphics.AnimatedSprite;
 import com.NerdSpace.Rain.Graphics.Screen;
-import com.NerdSpace.Rain.Graphics.Sprite;
 import com.NerdSpace.Rain.Graphics.SpriteSheet;
 import com.NerdSpace.Rain.Input.Keyboard;
 import com.NerdSpace.Rain.Input.Mouse;
 import com.NerdSpace.Rain.Level.TileCoordinate;
 
 public class Player extends Mob {
-    private Keyboard key;
-    private int walkCount;
+    private final Keyboard key;
     private int currShots;
-    private AnimatedSprite test = new AnimatedSprite(SpriteSheet.playerDown, 32, 32, 3);
-// Unused constructor
+    private final AnimatedSprite down = new AnimatedSprite(SpriteSheet.trainerDown, 32, 32, 3);
+    private final AnimatedSprite left = new AnimatedSprite(SpriteSheet.trainerLeft, 32, 32, 3);
+    private final AnimatedSprite right = new AnimatedSprite(SpriteSheet.trainerRight, 32, 32, 3);
+    private final AnimatedSprite up = new AnimatedSprite(SpriteSheet.trainerUp, 32, 32, 3);
+    private AnimatedSprite currAnimSprite = up;
+    // Unused constructor
 //    public Player(Keyboard key) {
 //        this.key = key;
 //    }
@@ -28,29 +30,31 @@ public class Player extends Mob {
     }
 
     public void render(Screen screen) {
-        doWalkAnimation();
-        if (!moving || walkCount > 7500) walkCount = 0;
-        else walkCount++;
-
-//        screen.renderPlayer(x - 16, y - 16, sprite);
-        screen.renderPlayer(x - 16, y - 16, test.getSprite());
+        sprite = currAnimSprite.getSprite();
+        screen.renderMob((int) (x - 16), (int) (y - 16), this);
 
 
     }
 
     public void update() {
-        test.update();
-        if (currShots != 0) currShots--;
+        if (moving) currAnimSprite.update();
+        else currAnimSprite.setFrame(0);
+        if (currShots != 0) currShots--; // tracks shots to make sure they don't exceed rate of fire
         else currShots = TrainerProjectile.RATE_OF_FIRE;
         int vx = 0, vy = 0;
-        if (key.up) vy--;
-        if (key.down) vy++;
-        if (key.left) vx--;
-        if (key.right) vx++;
-        if (vx != 0 || vy != 0) {
-            moving = true;
-            move(vx, vy);
+        if (key.up) vy -= 2;
+        if (key.down) vy += 2;
+        if (key.left) vx -= 2;
+        if (key.right) vx += 2;
 
+        if (vx != 0 || vy != 0) {
+            if (!moving) currAnimSprite.setFrame(0); // if they just started moving
+            moving = true;
+            if (dir == 0) currAnimSprite = up;
+            else if (dir == 2) currAnimSprite = down;
+            if (dir == 1) currAnimSprite = right;
+            else if (dir == 3) currAnimSprite = left;
+            move(vx, vy);
         } else moving = false;
 
         updateShooting();
@@ -62,60 +66,17 @@ public class Player extends Mob {
             double dy = Mouse.getY() - Game.getWindowHeight() / 2.0;
             double dir = Math.atan2(dy, dx);
 
-            shoot(x, y, dir);
+            shoot((int) x, (int) y, dir);
 
         }
     }
 
-    private void doWalkAnimation() {
-        if (dir == 0) {
-            if (moving) {
-                if (walkCount % 60 < 15) {
-                    sprite = Sprite.playerF_1;
-                } else if (walkCount % 60 < 30) {
-                    sprite = Sprite.playerF_2;
-                } else if (walkCount % 60 < 45) {
-                    sprite = Sprite.playerF_3;
-                } else {
-                    sprite = Sprite.playerF;
-                }
-            } else sprite = Sprite.playerF;
-        } else if (dir == 1) {
-            if (moving) {
-                if (walkCount % 60 < 15) {
-                    sprite = Sprite.playerR_1;
-                } else if (walkCount % 60 < 30) {
-                    sprite = Sprite.playerR_2;
-                } else if (walkCount % 60 < 45) {
-                    sprite = Sprite.playerR_3;
-                } else {
-                    sprite = Sprite.playerR;
-                }
-            } else sprite = Sprite.playerR;
-        } else if (dir == 2) {
-            if (moving) {
-                if (walkCount % 60 < 15) {
-                    sprite = Sprite.playerB_1;
-                } else if (walkCount % 60 < 30) {
-                    sprite = Sprite.playerB_2;
-                } else if (walkCount % 60 < 45) {
-                    sprite = Sprite.playerB_3;
-                } else {
-                    sprite = Sprite.playerB;
-                }
-            } else sprite = Sprite.playerB;
-        } else if (dir == 3) {
-            if (moving) {
-                if (walkCount % 60 < 15) {
-                    sprite = Sprite.playerL_1;
-                } else if (walkCount % 60 < 30) {
-                    sprite = Sprite.playerL_2;
-                } else if (walkCount % 60 < 45) {
-                    sprite = Sprite.playerL_3;
-                } else {
-                    sprite = Sprite.playerL;
-                }
-            } else sprite = Sprite.playerL;
-        }
+    public double getX() {
+        return x;
     }
+
+    public double getY() {
+        return y;
+    }
+
 }

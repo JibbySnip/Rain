@@ -1,5 +1,6 @@
 package com.NerdSpace.Rain.Graphics;
 
+import com.NerdSpace.Rain.Entity.Mob.Mob;
 import com.NerdSpace.Rain.Entity.Projectile.Projectile;
 import com.NerdSpace.Rain.Level.RandomLevel;
 import com.NerdSpace.Rain.Level.Tile.Tile;
@@ -92,7 +93,7 @@ public class Screen {
         renderSprite(xp, yp, p.sprite, true, true);
     }
 
-    public void renderPlayer(int xp, int yp, Sprite sprite) {
+    public void renderMob(int xp, int yp, Mob mob) {
 //        xp -= xOffset;
 //        yp -= yOffset;
 //        for (int y = 0; y < sprite.SIZE; y++) {
@@ -105,7 +106,7 @@ public class Screen {
 //                if (col != 0xFFFF00FF) pixels[xa + ya * width] = col;
 //            }
 //        }
-        renderSprite(xp, yp, sprite, true, true);
+        renderSprite(xp, yp, mob.getSprite(), true, true);
     }
 
 

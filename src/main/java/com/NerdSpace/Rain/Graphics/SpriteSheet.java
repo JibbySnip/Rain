@@ -11,16 +11,26 @@ public class SpriteSheet {
     public final int WIDTH, HEIGHT;
     private Sprite[] sprites;
 
-    public static SpriteSheet trainer = new SpriteSheet("/textures/players/trainer.png", 128);
     public static SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256);
-    public static SpriteSheet playerDown = new SpriteSheet(trainer, 0, 0, 4, 1, 32);
     public static SpriteSheet spawn = new SpriteSheet("/textures/spawn_textures_v2.png", 48);
+
+    public static SpriteSheet trainer = new SpriteSheet("/textures/players/trainer.png", 128);
+    public static SpriteSheet trainerDown = new SpriteSheet(trainer, 0, 0, 4, 1, 32);
+    public static SpriteSheet trainerLeft = new SpriteSheet(trainer, 0, 1, 4, 1, 32);
+    public static SpriteSheet trainerRight = new SpriteSheet(trainer, 0, 2, 4, 1, 32);
+    public static SpriteSheet trainerUp = new SpriteSheet(trainer, 0, 3, 4, 1, 32);
+
+    public static SpriteSheet ozzy = new SpriteSheet("/textures/mobs/ozzy.png", 64);
+    public static SpriteSheet ozzyDown = new SpriteSheet(ozzy, 0, 0, 4, 1, 16);
+    public static SpriteSheet ozzyUp = new SpriteSheet(ozzy, 0, 1, 4, 1, 16);
+    public static SpriteSheet ozzyLeft = new SpriteSheet(ozzy, 0, 2, 4, 1, 16);
+    public static SpriteSheet ozzyRight = new SpriteSheet(ozzy, 0, 3, 4, 1, 16);
+
     public static SpriteSheet projectilesTrainer = new SpriteSheet("/textures/projectiles/trainer_projectiles.png", 48);
 
     public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSize) {
         int xx = x * spriteSize; // the x-pos of the sprite
         int yy = y * spriteSize; // the y-pos of the sprite
-
         SIZE = -1;
         WIDTH = width * spriteSize; // pixel precision
         HEIGHT = height * spriteSize;
@@ -40,7 +50,7 @@ public class SpriteSheet {
                 int[] spritePixels = new int[spriteSize * spriteSize];
                 for (int yp = 0; yp < spriteSize; yp++) { // this is in pixel precision
                     for (int xp = 0; xp < spriteSize; xp++) {
-                        spritePixels[xp + yp * spriteSize] = sheet.pixels[(xp + x0 * spriteSize) + (yp + y0 * spriteSize) * WIDTH];
+                        spritePixels[xp + yp * spriteSize] = pixels[(xp + x0 * spriteSize) + (yp + y0 * spriteSize) * WIDTH];
 
                     }
                 }
