@@ -7,7 +7,7 @@ import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Graphics.SpriteSheet;
 import com.NerdSpace.Rain.Input.Keyboard;
 import com.NerdSpace.Rain.Input.Mouse;
-import com.NerdSpace.Rain.Level.TileCoordinate;
+import com.NerdSpace.Rain.Utils.TileCoordinate;
 
 public class Player extends Mob {
     private final Keyboard key;
@@ -27,6 +27,7 @@ public class Player extends Mob {
         this.y = t.getY();
         this.key = key;
         currShots = TrainerProjectile.RATE_OF_FIRE;
+        speed = 1;
     }
 
     public void render(Screen screen) {
@@ -41,11 +42,11 @@ public class Player extends Mob {
         else currAnimSprite.setFrame(0);
         if (currShots != 0) currShots--; // tracks shots to make sure they don't exceed rate of fire
         else currShots = TrainerProjectile.RATE_OF_FIRE;
-        int vx = 0, vy = 0;
-        if (key.up) vy -= 2;
-        if (key.down) vy += 2;
-        if (key.left) vx -= 2;
-        if (key.right) vx += 2;
+        double vx = 0, vy = 0;
+        if (key.up) vy -= speed;
+        if (key.down) vy += speed;
+        if (key.left) vx -= speed;
+        if (key.right) vx += speed;
 
         if (vx != 0 || vy != 0) {
             if (!moving) currAnimSprite.setFrame(0); // if they just started moving
@@ -66,7 +67,7 @@ public class Player extends Mob {
             double dy = Mouse.getY() - Game.getWindowHeight() / 2.0;
             double dir = Math.atan2(dy, dx);
 
-            shoot((int) x, (int) y, dir);
+            shoot(x, y, dir);
 
         }
     }

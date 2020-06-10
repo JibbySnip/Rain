@@ -5,14 +5,14 @@ import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Graphics.Sprite;
 
 public abstract class Projectile extends Entity {
-    protected final int launchX, launchY;
+    protected final double launchX, launchY;
     protected double angle;
     public Sprite sprite;
     protected double x, y;
     protected double speed, range, damage;
     protected double dx, dy;
 
-    public Projectile(int launchX, int launchY, double angle) {
+    public Projectile(double launchX, double launchY, double angle) {
 
         this.launchX = launchX;
         this.launchY = launchY;

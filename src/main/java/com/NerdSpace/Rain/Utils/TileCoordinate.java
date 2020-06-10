@@ -1,4 +1,4 @@
-package com.NerdSpace.Rain.Level;
+package com.NerdSpace.Rain.Utils;
 
 public class TileCoordinate {
     private int x,y;

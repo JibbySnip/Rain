@@ -10,8 +10,9 @@ public abstract class Mob extends Entity {
 
     protected int dir = 0;
     protected boolean moving = false;
+    protected double speed;
 
-    public void move(int xa, int ya) {
+    public void move(double xa, double ya) {
         if (xa != 0 && ya != 0) {
             move(xa, 0);
             move(0, ya);
@@ -33,10 +34,10 @@ public abstract class Mob extends Entity {
 
         while (xa != 0) {
             if (Math.abs(xa) >= 1) {
-                if (!collision(signum(xa), 0)) {
-                    this.x += signum(xa);
+                if (!collision(Math.signum(xa), 0)) {
+                    this.x += Math.signum(xa);
                 }
-                xa -= signum(xa);
+                xa -= Math.signum(xa);
             } else {
                 this.x += xa;
                 xa = 0;
@@ -44,10 +45,10 @@ public abstract class Mob extends Entity {
         }
         while (ya != 0) {
             if (Math.abs(ya) >= 1) {
-                if (!collision(0, signum(ya))) {
-                    this.y += signum(ya);
+                if (!collision(0, Math.signum(ya))) {
+                    this.y += Math.signum(ya);
                 }
-                ya -= signum(ya);
+                ya -= Math.signum(ya);
             } else {
                 this.y += ya;
                 ya = 0;
@@ -65,12 +66,12 @@ public abstract class Mob extends Entity {
 
     public abstract void render(Screen screen);
 
-    protected void shoot(int x, int y, double dir) {
+    protected void shoot(double x, double y, double dir) {
         Projectile p = new TrainerProjectile(x, y, dir);
         level.add(p);
     }
 
-    public boolean collision(int xa, int ya) {
+    public boolean collision(double xa, double ya) {
         boolean solid = false;
         for (int c = 0; c < 4; c++) {
             int xt = ((int) (x + xa) + c % 2 * 9 - 5) >> 4;

@@ -4,12 +4,13 @@ com/NerdSpace/Rain/Graphics/SpriteSheet.class
 com/NerdSpace/Rain/Level/Tile/RockTile.class
 com/NerdSpace/Rain/Level/Tile/SpawnTiles/SpawnHedgeTile.class
 com/NerdSpace/Rain/Level/Tile/SpawnTiles/SpawnWallTile.class
-com/NerdSpace/Rain/Level/TileCoordinate.class
 com/NerdSpace/Rain/Level/Tile/FlowerTile.class
 com/NerdSpace/Rain/Graphics/Screen.class
 com/NerdSpace/Rain/Entity/Entity.class
 com/NerdSpace/Rain/Level/Tile/SpawnTiles/SpawnFloorTile.class
 com/NerdSpace/Rain/Level/SpawnLevel.class
+com/NerdSpace/Rain/Utils/Vector2i.class
+com/NerdSpace/Rain/Utils/TileCoordinate.class
 com/NerdSpace/Rain/Level/Tile/SpawnTiles/SpawnGrassTile.class
 com/NerdSpace/Rain/Level/Tile/GrassTile.class
 com/NerdSpace/Rain/Level/Level.class

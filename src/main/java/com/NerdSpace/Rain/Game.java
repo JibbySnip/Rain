@@ -5,7 +5,7 @@ import com.NerdSpace.Rain.Graphics.Screen;
 import com.NerdSpace.Rain.Input.Keyboard;
 import com.NerdSpace.Rain.Input.Mouse;
 import com.NerdSpace.Rain.Level.Level;
-import com.NerdSpace.Rain.Level.TileCoordinate;
+import com.NerdSpace.Rain.Utils.TileCoordinate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,10 +105,10 @@ public class Game extends Canvas implements Runnable {
         }
 
         screen.clear();
-        int xScroll = (int) player.x - screen.width / 2;
-        int yScroll = (int) player.y - screen.height / 2;
+        double xScroll = player.x - screen.width / 2.0;
+        double yScroll = player.y - screen.height / 2.0;
 
-        level.render(xScroll, yScroll, screen);
+        level.render((int) xScroll, (int) yScroll, screen);
         player.render(screen);
 
 

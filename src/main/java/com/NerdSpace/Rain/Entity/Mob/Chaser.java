@@ -6,8 +6,9 @@ import com.NerdSpace.Rain.Graphics.SpriteSheet;
 
 public class Chaser extends Mob {
 
-    private int xa, ya;
-    private final int FOLLOW_DIST = 20;
+
+    private double xa, ya;
+    private int FOLLOW_DIST = 50;
     Player player;
     private final AnimatedSprite up = new AnimatedSprite(SpriteSheet.ozzyUp, 16, 16, 3);
     private final AnimatedSprite down = new AnimatedSprite(SpriteSheet.ozzyDown, 16, 16, 3);
@@ -18,19 +19,20 @@ public class Chaser extends Mob {
     public Chaser(int x, int y) {
         this.x = x << 4;
         this.y = y << 4;
+        speed = 0.8;
     }
 
     private void move() {
         xa = ya = 0;
         player = level.getNearestPlayer(this, FOLLOW_DIST);
-        if (player == null) {
-            xa = 0;
-            ya = 0;
-        } else {
-            if (x < player.getX()) xa++;
-            if (x > player.getX()) xa--;
-            if (y < player.getY()) ya++;
-            if (y > player.getY()) ya--;
+        if (player != null) {
+            if (x < player.getX()) xa += speed;
+            if (x > player.getX()) xa -= speed;
+            if (y < player.getY()) ya += speed;
+            if (y > player.getY()) ya -= speed;
+            if (Math.floor(x) == Math.floor(player.getX())) xa = 0;
+            if (Math.floor(y) == Math.floor(player.getY())) ya = 0;
+
         }
         if (xa != 0 || ya != 0) {
             move(xa, ya);
